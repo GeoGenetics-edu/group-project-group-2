@@ -5,7 +5,7 @@
 | Member | KU-ID |
 |--------|-------|
 | Kalle Christoffersen | rsc270 |
-| _Name_ | _abc123_ |
+| Konrad Frederik Hänninen Pedersen | bjv627 |
 | _Name_ | _abc123_ |
 | _Name_ | _abc123_ |
 
