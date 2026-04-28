@@ -1,8 +1,8 @@
 
 #!/bin/bash
 #SBATCH --job-name=download_SRA                                       # name shown in squeue. It can be anything.
-#SBATCH --output=/maps/projects/course_1/group/<KU_USER>/logs/%x_%j.out   # stdout log. Make sure to create your logs folder
-#SBATCH --error=/maps/projects/course_1/people/<KU_USER>/logs/%x_%j.err    # stderr log
+#SBATCH --output=/maps/projects/course_1/group/rsc270/logs/%x_%j.out   # stdout log. Make sure to create your logs folder
+#SBATCH --error=/maps/projects/course_1/people/rsc270/logs/%x_%j.err    # stderr log
 #SBATCH --ntasks=1                                               # one task (one process group)
 #SBATCH --cpus-per-task=10                                       # CPUs available to that task
 #SBATCH --mem-per-cpu=10G                                        # RAM per CPU (total = cpus * mem-per-cpu)
