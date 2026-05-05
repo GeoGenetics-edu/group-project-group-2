@@ -17,7 +17,7 @@
 #   INPUT_DIR="/maps/projects/course_1/scratch/<group_#>/<group-project-group-#>/09_annotation_bakta/"
 #   OUT_DIR="/maps/projects/course_1/scratch/<group_#>/<group-project-group-#>/10_annotation_cazymes/"
 INPUT_DIR="/maps/projects/course_1/scratch/group2/09_annotation_bakta_ref/"
-OUT_DIR="/maps/projects/course_1/scratch/group_2/10_annotation_cazymes_ref/"
+OUT_DIR="/maps/projects/course_1/scratch/group2/10_annotation_cazymes_ref/"
 DB="/maps/projects/course_1/data/dbcan_db"
 
 # Activate the dbCAN environment
