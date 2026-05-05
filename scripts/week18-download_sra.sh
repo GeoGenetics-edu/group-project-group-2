@@ -1,7 +1,7 @@
 
 #!/bin/bash
 #SBATCH --job-name=download_SRA                                       # name shown in squeue. It can be anything.
-#SBATCH --output=/maps/projects/course_1/group/rsc270/logs/%x_%j.out   # stdout log. Make sure to create your logs folder
+#SBATCH --output=/maps/projects/course_1/scratch/group2/group-project-group-2/logs/%x_%j.out   # stdout log. Make sure to create your logs folder
 #SBATCH --error=/maps/projects/course_1/people/rsc270/logs/%x_%j.err    # stderr log
 #SBATCH --ntasks=1                                               # one task (one process group)
 #SBATCH --cpus-per-task=10                                       # CPUs available to that task
@@ -24,15 +24,15 @@
 
 module load sratoolkit
 
-ACCESSION = 'ERR2641635'
+ACCESSION='ERR2641635'
 
-BODYSITE = 'gut_adult'
+BODYSITE='gut_adult'
 
-THREADS = '6'
+THREADS='6'
 
-RAW_DIR = "/maps/projects/course_1/scratch/group2/group-project-group-2/week18-preprocessing/data"
+RAW_DIR="/maps/projects/course_1/scratch/group2/group-project-group-2/week18-preprocessing/data"
 
-VALIDATION_LOG = ${ACCESSION}/validate.log
+VALIDATION_LOG=${ACCESSION}/validate.log
 
 # 1. Download the .sra archive
 prefetch ${ACCESSION} --max-size 1t -p -O ${RAW_DIR}/${BODYSITE}
