@@ -1,0 +1,39 @@
+---
+title: "Data - Genus (Renal)"
+author: "Kalle"
+date: "2026-05-22"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Libraries 
+
+```{r}
+library(ggh4x)
+library(ggplot2)
+```
+
+
+```{r}
+# Loading finished phyloseq table 
+load("phyloseq.RData")
+pylsq
+```
+
+```{r}
+rank_names(pylsq)
+```
+
+
+
+```{r}
+meta <- as(sample_data(pylsq), "data.frame")
+
+table(meta$Disease.MESH.ID,meta$Country,  useNA = "always")
+
+```
+
+

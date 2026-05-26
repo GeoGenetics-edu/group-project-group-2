@@ -1,0 +1,265 @@
+---
+title: "Diabetes - Datase"
+author: "Kalle"
+date: "2026-05-21"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Libraries 
+
+```{r}
+library(ggh4x)
+library(ggplot2)
+```
+
+
+
+
+```{r}
+
+#library(tidyverse)
+#library(ape)
+#library(tibble)
+```
+
+
+## Loading data
+
+```{r}
+# Loading finished phyloseq table 
+load("phyloseq.RData")
+pylsq
+```
+
+```{r}
+rank_names(pylsq)
+```
+
+# Exploring phyloseq object 
+
+## Inspecting the data
+
+
+```{r}
+meta <- as(sample_data(pylsq), "data.frame")
+
+table(meta$Disease.MESH.ID,meta$Country,  useNA = "always")
+
+
+```
+
+```{r subset-samples}
+# Subsetting the data into three categories: China, USA and Europe 
+ps_china <- subset_samples(
+  pylsq,
+  Country %in% c("China")
+)
+
+ps_usa <- subset_samples(
+  pylsq,
+  Country %in% c("United States of America")
+)
+
+ps_europe <- subset_samples(
+  pylsq,
+  Country %in% c("Denmark","Estonia","Finland","Germany","Hungary","Sweden","Yugoslavia")
+)
+```
+
+
+```{r}
+ps_china
+```
+
+```{r}
+ps_usa
+```
+
+```{r}
+ps_europe
+```
+
+
+### Agglormerating taxa
+
+```{r agglomerate-taxa}
+ps_genus <- tax_glom(
+  pylsq,
+  taxrank = "Genus",
+  NArm = TRUE
+)
+
+# After agglomeration, the taxa are grouped at the genus level,
+# but the taxa names still correspond to the original MAG IDs.
+# To make the object easier to interpret and visualise,
+# we can replace the taxa names with the corresponding genus names.
+taxa_names(ps_genus) <- make.unique(
+  as.character(tax_table(ps_genus)[, "Genus"])
+)
+
+tax_table(ps_genus)
+```
+
+
+## Data visualisation with phyloseq
+
+
+```{r plot-bar, fig.width=15, fig.height=20}
+plot_bar(ps_genus, fill = "Genus")
+```
+
+
+
+
+```{r plot-tree, fig.width=9, fig.height=7}
+plot_tree(pylsq, "tree_only")
+```
+
+
+```{r plot-bar, fig.width=15, fig.height=20}
+plot_tree(pylsq, color="Family", ladderize="left")
+```
+
+
+
+```{r plot-heatmap, fig.width=20, fig.height=14}
+plot_heatmap(ps_genus)
+```
+
+
+# Statistical testing of alpha diversity 
+
+```{r}
+library(tidyverse)
+library(tibble)
+```
+
+
+
+```{r calculate-shannon}
+# Calculate Shannon diversity for all samples
+shannon <- estimate_richness(
+  pylsq,
+  measures = "Shannon"
+)
+
+head(shannon)
+```
+
+
+
+```{r plot-shannon-basic, fig.width=8, fig.height=5}
+plot_richness(
+  pylsq,
+  measures = "Shannon"
+)
+```
+
+```{r plot-shannon-by-country, fig.width=9, fig.height=5}
+plot_richness(
+  pylsq,
+  measures = "Shannon",
+  x = "Country"
+)
+```
+
+```{r}
+sample_data(pylsq)
+```
+
+
+
+
+```{r plot-shannon-by-sick/healthy, fig.width=9, fig.height=5}
+# Tester alpha-diversitet mellem alle lande hos både syge og raske
+
+plot_richness(
+  pylsq,
+  measures = "Shannon",
+  x = "Disease.MESH.ID"
+)
+```
+
+
+```{r plot-shannon-by-sick/healthy, fig.width=9, fig.height=5}
+# Tester alpha-diversitet mellem alle lande hos både syge og raske
+
+plot_richness(
+  pylsq,
+  measures = "Shannon",
+  x = "Disease.MESH.ID",
+  color="Country"
+)
+```
+
+
+
+```{r plot-shannon-by-sick/healthy, fig.width=9, fig.height=5}
+# Alpha-diversitet, men det er kun for Kina
+plot_richness(
+  ps_china,
+  measures = "Shannon",
+  x = "Disease.MESH.ID"
+)
+```
+
+
+
+
+```{r plot-shannon-by-sick/healthy, fig.width=9, fig.height=5}
+# Alpha-diversitet, men det er kun for USA
+plot_richness(
+  ps_usa,
+  measures = "Shannon",
+  x = "Disease.MESH.ID"
+)
+```
+
+
+
+
+
+
+```{r plot-shannon-by-sick/healthy, fig.width=9, fig.height=5}
+# Alpha-diversitet, men det er kun for Kina
+plot_richness(
+  ps_europe,
+  measures = "Shannon",
+  x = "Country"
+)
+```
+
+
+
+```{r plot-shannon-basic, fig.width=8, fig.height=5}
+ps_pa <- transform_sample_counts(pylsq, function(x) {ifelse(x>0, 1, 0)})
+
+plot_richness(
+  ps_pa,
+  measures = "Observed",
+  x = "Disease.MESH.ID"
+)
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

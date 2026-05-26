@@ -1,13 +1,13 @@
 # NBIB25004U — Metagenomics Analyses for Microbiomes 2026
 
-## Group _N_
+## Group 2
 
 | Member | KU-ID |
 |--------|-------|
-| _Name_ | _abc123_ |
-| _Name_ | _abc123_ |
-| _Name_ | _abc123_ |
-| _Name_ | _abc123_ |
+| Kalle Christoffersen | rsc270 |
+| Saba Rasouli | psg951 |
+| Ludvig Lyster | crg232 |
+| Konrad Frederik Hänninen Pedersen | bjv627 |
 
 ## Links
 
