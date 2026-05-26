@@ -1,0 +1,91 @@
+---
+title: "Data - Species"
+author: "Kalle"
+date: "2026-05-22"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Libraries 
+
+```{r}
+library(ggh4x)
+library(ggplot2)
+
+```
+
+
+
+
+```{r}
+# Loading finished phyloseq table 
+load("phyloseq.RData")
+pylsq
+```
+
+
+
+```{r}
+```
+
+
+```{r}
+otu_table(pylsq)
+sample_data(pylsq)
+tax_table(pylsq)
+```
+
+
+```{r}
+rank_names(pylsq)
+```
+
+
+
+```{r}
+ps_rel <- transform_sample_counts(pylsq, function(x) x / sum(x))
+otu_rel <- as(otu_table(ps_rel), "matrix") %>% t() %>% as.data.frame()
+meta_rel <- as(sample_data(ps_rel), "matrix") %>% as.data.frame()
+tax_rel <- as(tax_table(ps_rel), "matrix") %>% as.data.frame()
+
+ps_genus <- tax_glom(ps_rel, taxrank = "Genus")
+
+plot_bar(ps_genus, fill = "Genus") +
+  facet_nested(~ body_site + age + status, scales = "free_x") +
+  theme_bw() +
+  theme(axis.text.x = element_blank())
+```
+
+
+```{r}
+plot_bar(ps_genus, fill = "Genus") +
+  # Opdel efter antibiotikaforbrug, køn og sygdomsstatus
+  facet_nested(~ Recent.antibiotics.use + Sex + Disease.name, scales = "free_x") + 
+  theme_bw() +
+  theme(
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank()
+  )
+```
+
+
+
+```{r}
+# Træk metadata ud som et almindeligt dataramme
+meta <- as(sample_data(pylsq), "data.frame")
+
+# Lav en frekvenstabel over Disease.name for at se alle unikke værdier
+table(meta$Disease.MESH.ID, useNA = "always")
+```
+
+```{r}
+table(meta$Country,meta$Disease.MESH.ID, useNA = "always")
+```
+
+
+
+
